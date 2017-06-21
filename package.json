@@ -1,0 +1,29 @@
+{
+  "name": "baishancloud-charts",
+  "version": "0.1.5",
+  "homepage": ".",
+  "dependencies": {
+    "echarts": "^3.6.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "react-scripts": "1.0.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "dist": "babel lib -d dist "
+  },
+  "files": [
+    "dits"
+  ],
+  "main": "dist/index.js"
+
+}
