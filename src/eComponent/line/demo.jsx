@@ -8,7 +8,7 @@ class LineDemo extends Component {
     }
     componentDidMount() {
         this.setState({
-            data: this.getData(30)
+            data: this.getData(100)
         })
     }
     getData = (times) => {
@@ -35,6 +35,7 @@ class LineDemo extends Component {
                         area
                         data={this.state.data}
                         col={this.state.col}
+                        dataZoom='both'
                     >
                     </Line>
                 </div>

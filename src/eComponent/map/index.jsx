@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Ebase from './../e.base'
 import PropTypes from 'prop-types';
+import 'echarts/map/js/china'
 class Map extends Ebase {
 
     get series() {
@@ -47,8 +48,7 @@ class Map extends Ebase {
         let option = this.getOption
         option.series.map(item => {
             item.type = "map"
-            require('echarts/map/js/' + this.props.mapType)
-            item.mapType = this.props.mapType
+            item.mapType = 'china'
             item.label = {
                 normal: {
                     show: this.props.label

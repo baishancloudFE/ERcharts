@@ -32,7 +32,7 @@ class Ebase extends Component {
         textStyle: false,
     }
     Echart = null
-    id = new Date().getTime()
+    id = new Date().getTime() + Math.random() * 500
     static defaultProps = {
         legend: true,
         data: [],
@@ -65,7 +65,12 @@ class Ebase extends Component {
         } else {
             this.Echart.hideLoading()
         }
-        this.changeOption(this.getOption)
+        if (this.props.type) {
+             this.config()
+        } else {
+            this.changeOption(this.getOption)
+
+        }
         this.events(this.props.events)
         this.off(this.props.off)
         return false
