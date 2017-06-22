@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Ebase from './../e.base'
 import PropTypes from 'prop-types';
 import 'echarts/lib/chart/pie'
-class Pie extends Ebase {
+class Funnel extends Ebase {
 
     get xAxis() {
         return null
@@ -30,7 +30,7 @@ class Pie extends Ebase {
     get tooltip() {
         return {
             trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
+            formatter: "{a} <br/>{b} : {c}%"
         }
     }
     get series() {
@@ -52,17 +52,19 @@ class Pie extends Ebase {
             col[1].data = series
             return [col[1]]
         }
+
     }
     config = () => {
         let option = this.getOption
         option.series.map(item => {
-            item.type = "pie"
-            if (this.props.rose) {
-                item.roseType = 'angle'
-
-            }
-            if (this.props.ring) {
-                item.radius = ['50%', '70%']
+            item.type = "funnel"
+            if (this.props.labelPosition) {
+                item.label = {
+                    normal: {
+                        show: true,
+                        position: this.props.labelPosition
+                    }
+                }
             }
             return item;
         })
@@ -70,6 +72,6 @@ class Pie extends Ebase {
     }
 }
 
-export default Pie;
-Pie.propTypes.ring = PropTypes.bool
-Pie.propTypes.rose = PropTypes.bool
+
+export default Funnel;
+

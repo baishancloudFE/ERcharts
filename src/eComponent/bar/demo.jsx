@@ -51,10 +51,7 @@ class BarDemo extends Component {
                     col={this.state.col}
                     width={800}
                     height={1000}
-                    legendPosition='left'
-                    setting={{
-                        backgroundColor:'#000'
-                    }}
+                    toolbox={['dataView']}
                 >
                 </Bar>
             </div>

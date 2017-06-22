@@ -7,10 +7,12 @@ import PieDemo from './eComponent/pie/demo'
 import MapDemo from './eComponent/map/demo'
 import WorldMapDemo from './eComponent/worldMap/demo'
 import ChartsDemo from './eComponent/charts/demo'
+import FunnelDemo from './eComponent/funnel/demo'
 import './index.css'
 
 const Demo = () => (
     <div>
+        <FunnelDemo></FunnelDemo>
         <LineDemo></LineDemo>
         <PointDemo></PointDemo>
         <BarDemo></BarDemo>
