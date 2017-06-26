@@ -13,7 +13,22 @@ class Bar extends Ebase {
             }
             return item;
         })
+        this.isCompare(option.series)
         this.changeOption(option)
+    }
+    isCompare = (series) => {
+        if (this.props.compare) {
+            const compare = {
+                name: this.props.compare.name,
+                type: 'bar',
+                data: []
+            },
+                names = this.props.compare.col
+            this.props.data.forEach(item => {
+                compare.data.push(-Math.abs(item[names[0]] - item[names[1]]))
+            })
+            series.push(compare)
+        }
     }
 }
 

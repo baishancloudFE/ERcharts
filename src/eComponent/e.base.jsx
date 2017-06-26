@@ -65,12 +65,12 @@ class Ebase extends Component {
         } else {
             this.Echart.hideLoading()
         }
-        if (this.props.type) {
-             this.config()
-        } else {
-            this.changeOption(this.getOption)
-
-        }
+        // if (this.props.type) {
+        //     this.config()
+        // } else {
+        //     this.changeOption(this.getOption)
+        // }
+        this.config()
         this.events(this.props.events)
         this.off(this.props.off)
         return false
@@ -85,6 +85,7 @@ class Ebase extends Component {
             }
         }
     }
+
     off = (events) => {
         if (events && events.length) {
             for (let item of events) {

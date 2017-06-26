@@ -6,11 +6,13 @@ class BarDemo extends Component {
         data: [],
         col: ["date", "page", "food"]
     }
+
     componentDidMount() {
         this.setState({
             data: this.getData(10)
         })
     }
+
     getData = (times) => {
         let data = [],
             stateDate = +new Date(2011, 1, 2),
@@ -21,7 +23,7 @@ class BarDemo extends Component {
                 date: [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
                 page: Math.floor(Math.random() * 300),
                 food: Math.floor(Math.random() * 300),
-                tool: Math.floor(Math.random() * 300)
+                tool: -Math.floor(Math.random() * 300)
             })
         }
         return data
@@ -51,6 +53,12 @@ class BarDemo extends Component {
                     col={this.state.col}
                     width={800}
                     height={1000}
+                    reverse
+                    tooltip='shadow'
+                    compare={{
+                        name: '差别',
+                        col: ['page', 'food']
+                    }}
                     toolbox={['dataView']}
                 >
                 </Bar>
