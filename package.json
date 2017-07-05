@@ -1,6 +1,6 @@
 {
   "name": "ercharts",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "homepage": ".",
   "dependencies": {
     "echarts": "^3.6.1",
@@ -22,7 +22,7 @@
     "dist": "babel lib -d dist "
   },
   "files": [
-    "dits"
+    "dist"
   ],
   "main": "dist/index.js"
 

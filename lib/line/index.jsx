@@ -3,11 +3,12 @@ import Ebase from './../e.base'
 import PropTypes from 'prop-types';
 import 'echarts/lib/chart/line'
 class Line extends Ebase {
-
     config = () => {
         let option = this.getOption
+        
         option.series.map(item => {
             item.type = "line"
+
             if (this.props.stack) {
                 item.stack = "all"
             }

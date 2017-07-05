@@ -18,7 +18,7 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-require('echarts/lib/chart/pie');
+require('echarts/map/js/world');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28,58 +28,49 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Pie = function (_Ebase) {
-    _inherits(Pie, _Ebase);
+var WorldMap = function (_Ebase) {
+    _inherits(WorldMap, _Ebase);
 
-    function Pie() {
+    function WorldMap() {
         var _ref;
 
         var _temp, _this, _ret;
 
-        _classCallCheck(this, Pie);
+        _classCallCheck(this, WorldMap);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Pie.__proto__ || Object.getPrototypeOf(Pie)).call.apply(_ref, [this].concat(args))), _this), _this.config = function () {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WorldMap.__proto__ || Object.getPrototypeOf(WorldMap)).call.apply(_ref, [this].concat(args))), _this), _this.config = function () {
             var option = _this.getOption;
             option.series.map(function (item) {
-                item.type = "pie";
-                if (_this.props.rose) {
-                    item.roseType = 'angle';
-                }
-                if (_this.props.ring) {
-                    item.radius = ['50%', '70%'];
-                }
+                item.type = "map";
+                item.mapType = 'world';
+                item.label = {
+                    normal: {
+                        show: _this.props.label
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                };
                 return item;
             });
             _this.changeOption(option);
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
-    _createClass(Pie, [{
-        key: 'xAxis',
+    _createClass(WorldMap, [{
+        key: 'series',
         get: function get() {
-            return null;
-        }
-    }, {
-        key: 'yAxis',
-        get: function get() {
-            return null;
-        }
-    }, {
-        key: 'dataZoom',
-        get: function get() {
-            return null;
-        }
-    }, {
-        key: 'legend',
-        get: function get() {
+            var series = [];
             var data = this.props.data,
-                col = this.props.col,
-                legend = [];
-            if (this.props.legend) {
+                col = this.props.col;
+            for (var i = 1, n = col.length; i < n; ++i) {
+                var datas = [],
+                    obj = {},
+                    key = typeof col[i] === "string" ? col[i] : col[i].name;
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
                 var _iteratorError = undefined;
@@ -88,7 +79,10 @@ var Pie = function (_Ebase) {
                     for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                         var item = _step.value;
 
-                        legend.push(item[col[0]]);
+                        datas.push({
+                            name: item[col[0]],
+                            value: item[key]
+                        });
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -105,70 +99,42 @@ var Pie = function (_Ebase) {
                     }
                 }
 
-                var limit = this.props.legendLimit ? this.props.legendLimit : legend.length;
-                return { data: legend.slice(0, limit) };
-            } else {
-                return { show: false };
+                if (typeof col[i] === "string") {
+                    series.push({
+                        name: col[i],
+                        data: datas
+                    });
+                } else {
+                    obj = col[i];
+                    obj.data = datas;
+                    series.push(obj);
+                }
             }
+            return series;
+        }
+    }, {
+        key: 'xAxis',
+        get: function get() {
+            return null;
+        }
+    }, {
+        key: 'yAxis',
+        get: function get() {
+            return null;
         }
     }, {
         key: 'tooltip',
         get: function get() {
-            return {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            };
+            return {};
         }
     }, {
-        key: 'series',
+        key: 'dataZoom',
         get: function get() {
-            var series = [];
-            var data = this.props.data,
-                col = this.props.col;
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
-
-            try {
-                for (var _iterator2 = data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var dataItem = _step2.value;
-
-                    series.push({
-                        value: dataItem[typeof col[1] == "string" ? col[1] : col[1].name],
-                        name: dataItem[typeof col[0] == "string" ? col[0] : col[0].name]
-                    });
-                }
-            } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                        _iterator2.return();
-                    }
-                } finally {
-                    if (_didIteratorError2) {
-                        throw _iteratorError2;
-                    }
-                }
-            }
-
-            if (typeof col[1] === "string") {
-                return [{
-                    name: col[1],
-                    data: series
-                }];
-            } else {
-                col[1].data = series;
-                return [col[1]];
-            }
+            return null;
         }
     }]);
 
-    return Pie;
+    return WorldMap;
 }(_e2.default);
 
-exports.default = Pie;
-
-Pie.propTypes.ring = _propTypes2.default.bool;
-Pie.propTypes.rose = _propTypes2.default.bool;
+exports.default = WorldMap;

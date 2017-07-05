@@ -5,7 +5,7 @@ class FunnelDemo extends Component {
     state = {
         data: [],
         col: ["date", 'some'],
-   
+
         loading: false
     }
     componentDidMount() {
@@ -37,6 +37,38 @@ class FunnelDemo extends Component {
             <div>
 
                 <div style={{ width: '500px', height: '500px', display: 'inline-block' }}>
+                    <Funnel
+                        data={this.state.data}
+                        col={this.state.col}
+                        tooltip
+                        labelPosition='inside'
+                        toolbox={['dataView']}
+                    >
+                    </Funnel>
+                    <Funnel
+                        data={this.state.data}
+                        col={this.state.col}
+                        tooltip
+                        labelPosition='inside'
+                        toolbox={['dataView']}
+                    >
+                    </Funnel>
+                    <Funnel
+                        data={this.state.data}
+                        col={this.state.col}
+                        tooltip
+                        labelPosition='inside'
+                        toolbox={['dataView']}
+                    >
+                    </Funnel>
+                    <Funnel
+                        data={this.state.data}
+                        col={this.state.col}
+                        tooltip
+                        labelPosition='inside'
+                        toolbox={['dataView']}
+                    >
+                    </Funnel>
                     <Funnel
                         data={this.state.data}
                         col={this.state.col}

@@ -32,7 +32,7 @@ class Ebase extends Component {
         textStyle: false,
     }
     Echart = null
-    id = new Date().getTime()
+    id = new Date().getTime() + (Math.floor(Math.random() * 500))
     static defaultProps = {
         legend: true,
         data: [],
@@ -65,7 +65,12 @@ class Ebase extends Component {
         } else {
             this.Echart.hideLoading()
         }
-        this.changeOption(this.getOption)
+        // if (this.props.type) {
+        //     this.config()
+        // } else {
+        //     this.changeOption(this.getOption)
+        // }
+        this.config()
         this.events(this.props.events)
         this.off(this.props.off)
         return false
@@ -80,6 +85,7 @@ class Ebase extends Component {
             }
         }
     }
+
     off = (events) => {
         if (events && events.length) {
             for (let item of events) {
@@ -125,8 +131,6 @@ class Ebase extends Component {
         let limit = this.props.legendLimit ? this.props.legendLimit + 1 : this.props.col.length
         return {
             data: this.props.col.slice(1, limit),
-            // align: this.props.brush ? "left" : "auto",
-            // left: this.props.brush ? 10 : "center",
             selectedMode: this.props.legendSelectedMode ? this.props.legendSelectedMode : true
         }
     }

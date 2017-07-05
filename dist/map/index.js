@@ -18,6 +18,8 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+require('echarts/map/js/china');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44,8 +46,7 @@ var Map = function (_Ebase) {
             var option = _this.getOption;
             option.series.map(function (item) {
                 item.type = "map";
-                require('echarts/map/js/' + _this.props.mapType);
-                item.mapType = _this.props.mapType;
+                item.mapType = 'china';
                 item.label = {
                     normal: {
                         show: _this.props.label

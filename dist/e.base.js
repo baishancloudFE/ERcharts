@@ -69,7 +69,7 @@ var Ebase = function (_Component) {
             calendar: false,
             color: true,
             textStyle: false
-        }, _this.Echart = null, _this.id = new Date().getTime(), _this.events = function (events) {
+        }, _this.Echart = null, _this.id = new Date().getTime() + Math.floor(Math.random() * 500), _this.events = function (events) {
             if (events && events.length) {
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -160,7 +160,12 @@ var Ebase = function (_Component) {
             } else {
                 this.Echart.hideLoading();
             }
-            this.changeOption(this.getOption);
+            // if (this.props.type) {
+            //     this.config()
+            // } else {
+            //     this.changeOption(this.getOption)
+            // }
+            this.config();
             this.events(this.props.events);
             this.off(this.props.off);
             return false;
@@ -231,8 +236,6 @@ var Ebase = function (_Component) {
             var limit = this.props.legendLimit ? this.props.legendLimit + 1 : this.props.col.length;
             return {
                 data: this.props.col.slice(1, limit),
-                // align: this.props.brush ? "left" : "auto",
-                // left: this.props.brush ? 10 : "center",
                 selectedMode: this.props.legendSelectedMode ? this.props.legendSelectedMode : true
             };
         }

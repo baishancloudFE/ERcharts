@@ -32,7 +32,7 @@ class Ebase extends Component {
         textStyle: false,
     }
     Echart = null
-    id = new Date().getTime() + Math.random() * 500
+    id = new Date().getTime() + (Math.floor(Math.random() * 500))
     static defaultProps = {
         legend: true,
         data: [],

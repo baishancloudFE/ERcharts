@@ -28,29 +28,31 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Pie = function (_Ebase) {
-    _inherits(Pie, _Ebase);
+var Funnel = function (_Ebase) {
+    _inherits(Funnel, _Ebase);
 
-    function Pie() {
+    function Funnel() {
         var _ref;
 
         var _temp, _this, _ret;
 
-        _classCallCheck(this, Pie);
+        _classCallCheck(this, Funnel);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Pie.__proto__ || Object.getPrototypeOf(Pie)).call.apply(_ref, [this].concat(args))), _this), _this.config = function () {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Funnel.__proto__ || Object.getPrototypeOf(Funnel)).call.apply(_ref, [this].concat(args))), _this), _this.config = function () {
             var option = _this.getOption;
             option.series.map(function (item) {
-                item.type = "pie";
-                if (_this.props.rose) {
-                    item.roseType = 'angle';
-                }
-                if (_this.props.ring) {
-                    item.radius = ['50%', '70%'];
+                item.type = "funnel";
+                if (_this.props.labelPosition) {
+                    item.label = {
+                        normal: {
+                            show: true,
+                            position: _this.props.labelPosition
+                        }
+                    };
                 }
                 return item;
             });
@@ -58,7 +60,7 @@ var Pie = function (_Ebase) {
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
-    _createClass(Pie, [{
+    _createClass(Funnel, [{
         key: 'xAxis',
         get: function get() {
             return null;
@@ -116,7 +118,7 @@ var Pie = function (_Ebase) {
         get: function get() {
             return {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "{a} <br/>{b} : {c}%"
             };
         }
     }, {
@@ -165,10 +167,7 @@ var Pie = function (_Ebase) {
         }
     }]);
 
-    return Pie;
+    return Funnel;
 }(_e2.default);
 
-exports.default = Pie;
-
-Pie.propTypes.ring = _propTypes2.default.bool;
-Pie.propTypes.rose = _propTypes2.default.bool;
+exports.default = Funnel;

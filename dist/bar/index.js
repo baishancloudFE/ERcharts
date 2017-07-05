@@ -44,9 +44,26 @@ var Bar = function (_Ebase) {
             var option = _this.getOption;
             option.series.map(function (item) {
                 item.type = "bar";
+                if (_this.props.stack) {
+                    item.stack = "all";
+                }
                 return item;
             });
+            _this.isCompare(option.series);
             _this.changeOption(option);
+        }, _this.isCompare = function (series) {
+            if (_this.props.compare) {
+                var compare = {
+                    name: _this.props.compare.name,
+                    type: 'bar',
+                    data: []
+                },
+                    names = _this.props.compare.col;
+                _this.props.data.forEach(function (item) {
+                    compare.data.push(-Math.abs(item[names[0]] - item[names[1]]));
+                });
+                series.push(compare);
+            }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
