@@ -28,6 +28,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var compare = function compare(arr1, arr2) {
+    if (!arr1 || !arr2) return false;
+    var flag = [];
+    arr1.forEach(function (item, index) {
+        if (arr2[index].event !== item.event) {
+            flag.push(arr2[index]);
+        }
+    });
+    return flag;
+};
+
 var Ebase = function (_Component) {
     _inherits(Ebase, _Component);
 
@@ -69,7 +80,7 @@ var Ebase = function (_Component) {
             calendar: false,
             color: true,
             textStyle: false
-        }, _this.Echart = null, _this.id = new Date().getTime() + Math.floor(Math.random() * 500), _this.events = function (events) {
+        }, _this.Echart = null, _this.id = new Date().getTime() + Math.floor(Math.random() * 5000), _this.events = function (events) {
             if (events && events.length) {
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -124,9 +135,9 @@ var Ebase = function (_Component) {
                 }
             }
         }, _this.changeOption = function (option) {
-            _this.Echart.setOption(option);
+            _this.Echart.setOption(option, _this.props.merge);
             if (_this.props.setting) {
-                _this.Echart.setOption(_this.props.setting);
+                _this.Echart.setOption(_this.props.setting, _this.props.merge);
             }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -150,6 +161,7 @@ var Ebase = function (_Component) {
         value: function componentDidMount() {
             this.Echart = _echarts2.default.init(document.getElementById(this.id));
             this.config();
+            this.events(this.props.events);
         }
     }, {
         key: 'shouldComponentUpdate',
@@ -165,10 +177,9 @@ var Ebase = function (_Component) {
             // } else {
             //     this.changeOption(this.getOption)
             // }
-            this.config();
-            this.events(this.props.events);
-            this.off(this.props.off);
-            return false;
+            this.config
+            // this.off(this.props.off)
+            ();return false;
         }
     }, {
         key: 'componentWillUnmount',
@@ -473,7 +484,8 @@ Ebase.defaultProps = {
     legend: true,
     data: [],
     col: [],
-    color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3']
+    color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
+    merge: true
 };
 exports.default = Ebase;
 

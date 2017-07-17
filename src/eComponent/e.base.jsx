@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import echarts from 'echarts/lib/echarts'
+const compare = function (arr1, arr2) {
+    if (!arr1 || !arr2) return false
+    let flag = []
+    arr1.forEach((item, index) => {
+        if (arr2[index].event !== item.event) {
+            flag.push(arr2[index])
+        }
+    })
+    return flag
+}
 class Ebase extends Component {
     //图表对象
     rule = {
@@ -32,12 +42,13 @@ class Ebase extends Component {
         textStyle: false,
     }
     Echart = null
-    id = new Date().getTime() + (Math.floor(Math.random() * 500))
+    id = new Date().getTime() + (Math.floor(Math.random() * 5000))
     static defaultProps = {
         legend: true,
         data: [],
         col: [],
-        color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3']
+        color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
+        merge: true
     }
     render() {
         let style = {
@@ -56,6 +67,8 @@ class Ebase extends Component {
     componentDidMount() {
         this.Echart = echarts.init(document.getElementById(this.id))
         this.config()
+        this.events(this.props.events)
+
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -71,8 +84,7 @@ class Ebase extends Component {
         //     this.changeOption(this.getOption)
         // }
         this.config()
-        this.events(this.props.events)
-        this.off(this.props.off)
+        // this.off(this.props.off)
         return false
     }
     componentWillUnmount() {
@@ -95,9 +107,9 @@ class Ebase extends Component {
     }
     //变更配置
     changeOption = (option) => {
-        this.Echart.setOption(option)
+        this.Echart.setOption(option, this.props.merge)
         if (this.props.setting) {
-            this.Echart.setOption(this.props.setting)
+            this.Echart.setOption(this.props.setting, this.props.merge)
         }
     }
     get color() {

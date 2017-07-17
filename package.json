@@ -1,6 +1,6 @@
 {
   "name": "ercharts",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "homepage": ".",
   "dependencies": {
     "echarts": "^3.6.1",

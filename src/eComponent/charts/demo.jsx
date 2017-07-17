@@ -4,8 +4,14 @@ import Charts from './index'
 class ChartsDemo extends Component {
     state = {
         data: [],
-        col: ["date", "page" ],
-        type: 'bar'
+        col: ["date", "page"],
+        type: 'bar',
+        events: [
+            {
+                event: 'click',
+                fun: () => console.log("object")
+            }
+        ]
     }
     componentDidMount() {
         this.setState({
@@ -28,14 +34,18 @@ class ChartsDemo extends Component {
     }
     addData = () => {
         this.setState({
-            data: this.getData(Math.floor(Math.random()*30))
+            data: this.getData(Math.floor(Math.random() * 30))
         })
     }
     changeType = () => {
-        this.setState({
-            type: ['bar', 'line', 'pie','scatter'][Math.floor(Math.random() * 5)]
+        this.state.events.push({
+            event: 'click',
+            fun: () => console.log("object")
         })
-        console.log(this.state.type)
+        this.setState({
+            type: ['bar', 'line', 'pie', 'scatter'][Math.floor(Math.random() * 5)],
+            events: this.state.events
+        })
     }
     render() {
         return (
@@ -47,6 +57,8 @@ class ChartsDemo extends Component {
                         data={this.state.data}
                         col={this.state.col}
                         type={this.state.type}
+                        events={this.state.events}
+                        merge={false}
                     >
                     </Charts>
                 </div>
