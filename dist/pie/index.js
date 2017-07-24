@@ -54,6 +54,25 @@ var Pie = function (_Ebase) {
                 }
                 return item;
             });
+            if (_this.props.inside) {
+                option.series[0].radius = ['40%', '55%'];
+                option.series.push({
+                    name: '内环',
+                    type: 'pie',
+                    data: _this.props.inside,
+                    radius: ['0', '30%'],
+                    label: {
+                        normal: {
+                            position: 'inner'
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    }
+                });
+            }
             _this.changeOption(option);
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -78,6 +97,7 @@ var Pie = function (_Ebase) {
         get: function get() {
             var data = this.props.data,
                 col = this.props.col,
+                inside = this.props.inside,
                 legend = [];
             if (this.props.legend) {
                 var _iteratorNormalCompletion = true;
@@ -86,9 +106,9 @@ var Pie = function (_Ebase) {
 
                 try {
                     for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var item = _step.value;
+                        var _item = _step.value;
 
-                        legend.push(item[col[0]]);
+                        legend.push(_item[col[0]]);
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -105,6 +125,32 @@ var Pie = function (_Ebase) {
                     }
                 }
 
+                if (inside) {
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = inside[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var item = _step2.value;
+
+                            legend.push(item['name']);
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+                }
                 var limit = this.props.legendLimit ? this.props.legendLimit : legend.length;
                 return { data: legend.slice(0, limit) };
             } else {
@@ -125,13 +171,13 @@ var Pie = function (_Ebase) {
             var series = [];
             var data = this.props.data,
                 col = this.props.col;
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
 
             try {
-                for (var _iterator2 = data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var dataItem = _step2.value;
+                for (var _iterator3 = data[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var dataItem = _step3.value;
 
                     series.push({
                         value: dataItem[typeof col[1] == "string" ? col[1] : col[1].name],
@@ -139,16 +185,16 @@ var Pie = function (_Ebase) {
                     });
                 }
             } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                        _iterator2.return();
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
                     }
                 } finally {
-                    if (_didIteratorError2) {
-                        throw _iteratorError2;
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
                     }
                 }
             }

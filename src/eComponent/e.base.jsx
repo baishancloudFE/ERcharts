@@ -48,7 +48,8 @@ class Ebase extends Component {
         data: [],
         col: [],
         color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
-        merge: true
+        notMerge: false,
+        log: false
     }
     render() {
         let style = {
@@ -107,9 +108,17 @@ class Ebase extends Component {
     }
     //变更配置
     changeOption = (option) => {
-        this.Echart.setOption(option, this.props.merge)
+
+        if (this.props.log) {
+            console.log(option)
+        }
+        this.Echart.setOption(option, {
+            notMerge: this.props.notMerge
+        })
         if (this.props.setting) {
-            this.Echart.setOption(this.props.setting, this.props.merge)
+            this.Echart.setOption(this.props.setting, {
+                notMerge: this.props.notMerge
+            })
         }
     }
     get color() {

@@ -3,7 +3,6 @@ import Ebase from './../e.base'
 import PropTypes from 'prop-types';
 import 'echarts/lib/chart/pie'
 class Pie extends Ebase {
-
     get xAxis() {
         return null
     }
@@ -16,10 +15,16 @@ class Pie extends Ebase {
     get legend() {
         let data = this.props.data,
             col = this.props.col,
+            inside = this.props.inside,
             legend = []
         if (this.props.legend) {
             for (let item of data) {
                 legend.push(item[col[0]])
+            }
+            if (inside) {
+                for (let item of inside) {
+                    legend.push(item['name'])
+                }
             }
             let limit = this.props.legendLimit ? this.props.legendLimit : legend.length
             return { data: legend.slice(0, limit) }
@@ -66,6 +71,25 @@ class Pie extends Ebase {
             }
             return item;
         })
+        if (this.props.inside) {
+            option.series[0].radius = ['40%', '55%']
+            option.series.push({
+                name: '内环',
+                type: 'pie',
+                data: this.props.inside,
+                radius: ['0', '30%'],
+                label: {
+                    normal: {
+                        position: 'inner'
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+            })
+        }
         this.changeOption(option)
     }
 }

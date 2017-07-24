@@ -48,6 +48,16 @@ class PieDemo extends Component {
                         tooltip
                         ring
                         rose
+                        inside={[
+                            {
+                                name: '测试',
+                                value: 335,
+                            },
+                            {
+                                name: 'OK',
+                                value: 444
+                            }
+                        ]}
                         loading={this.state.loading}
                     >
                     </Pie>

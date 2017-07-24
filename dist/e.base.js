@@ -135,9 +135,17 @@ var Ebase = function (_Component) {
                 }
             }
         }, _this.changeOption = function (option) {
-            _this.Echart.setOption(option, _this.props.merge);
+
+            if (_this.props.log) {
+                console.log(option);
+            }
+            _this.Echart.setOption(option, {
+                notMerge: _this.props.notMerge
+            });
             if (_this.props.setting) {
-                _this.Echart.setOption(_this.props.setting, _this.props.merge);
+                _this.Echart.setOption(_this.props.setting, {
+                    notMerge: _this.props.notMerge
+                });
             }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -485,7 +493,8 @@ Ebase.defaultProps = {
     data: [],
     col: [],
     color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
-    merge: true
+    notMerge: false,
+    log: false
 };
 exports.default = Ebase;
 
