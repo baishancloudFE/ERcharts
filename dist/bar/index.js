@@ -49,9 +49,9 @@ var Bar = function (_Ebase) {
                 }
                 return item;
             });
-            _this.isCompare(option.series);
+            _this.isCompare(option.series, option.legend);
             _this.changeOption(option);
-        }, _this.isCompare = function (series) {
+        }, _this.isCompare = function (series, legend) {
             if (_this.props.compare) {
                 var compare = {
                     name: _this.props.compare.name,
@@ -59,6 +59,7 @@ var Bar = function (_Ebase) {
                     data: []
                 },
                     names = _this.props.compare.col;
+                legend.data.push(_this.props.compare.name);
                 _this.props.data.forEach(function (item) {
                     compare.data.push(-Math.abs(item[names[0]] - item[names[1]]));
                 });

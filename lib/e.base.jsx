@@ -270,7 +270,7 @@ class Ebase extends Component {
                     },
                 ]
             default:
-                return null
+                return this.props.dataZoom
         }
 
     }

@@ -185,9 +185,9 @@ var Ebase = function (_Component) {
             // } else {
             //     this.changeOption(this.getOption)
             // }
-            this.config
+            this.config();
             // this.off(this.props.off)
-            ();return false;
+            return false;
         }
     }, {
         key: 'componentWillUnmount',
@@ -204,13 +204,22 @@ var Ebase = function (_Component) {
     }, {
         key: 'series',
         get: function get() {
+            var _props = this.props,
+                data = _props.data,
+                col = _props.col;
+
             var series = [];
-            var data = this.props.data,
-                col = this.props.col;
             for (var i = 1, n = col.length; i < n; ++i) {
                 var datas = [],
                     obj = {},
-                    key = typeof col[i] === "string" ? col[i] : col[i].name;
+                    key = typeof col[i] === "string" ? col[i] : col[i].name,
+                    name = '';
+                if (key.split(':').length > 1) {
+                    name = key.split(':')[0];
+                    key = key.split(':')[1];
+                } else {
+                    name = key;
+                }
                 var _iteratorNormalCompletion3 = true;
                 var _didIteratorError3 = false;
                 var _iteratorError3 = undefined;
@@ -238,11 +247,12 @@ var Ebase = function (_Component) {
 
                 if (typeof col[i] === "string") {
                     series.push({
-                        name: col[i],
+                        name: name,
                         data: datas
                     });
                 } else {
                     obj = col[i];
+                    obj.name = name;
                     obj.data = datas;
                     series.push(obj);
                 }
@@ -253,8 +263,40 @@ var Ebase = function (_Component) {
         key: 'legend',
         get: function get() {
             var limit = this.props.legendLimit ? this.props.legendLimit + 1 : this.props.col.length;
+            var data = [];
+            var _iteratorNormalCompletion4 = true;
+            var _didIteratorError4 = false;
+            var _iteratorError4 = undefined;
+
+            try {
+                for (var _iterator4 = this.props.col.slice(1, limit)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                    var item = _step4.value;
+
+                    if (typeof item === "string") {
+                        data.push(item.split(':')[0]);
+                    } else {
+                        var obj = Object.assign({}, item);
+                        obj.name = obj.name.split(':')[0];
+                        data.push(item);
+                    }
+                }
+            } catch (err) {
+                _didIteratorError4 = true;
+                _iteratorError4 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                        _iterator4.return();
+                    }
+                } finally {
+                    if (_didIteratorError4) {
+                        throw _iteratorError4;
+                    }
+                }
+            }
+
             return {
-                data: this.props.col.slice(1, limit),
+                data: data,
                 selectedMode: this.props.legendSelectedMode ? this.props.legendSelectedMode : true
             };
         }
@@ -278,27 +320,27 @@ var Ebase = function (_Component) {
             }
             var x = [],
                 name = this.props.col[0];
-            var _iteratorNormalCompletion4 = true;
-            var _didIteratorError4 = false;
-            var _iteratorError4 = undefined;
+            var _iteratorNormalCompletion5 = true;
+            var _didIteratorError5 = false;
+            var _iteratorError5 = undefined;
 
             try {
-                for (var _iterator4 = this.props.data[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                    var item = _step4.value;
+                for (var _iterator5 = this.props.data[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                    var item = _step5.value;
 
                     x.push(item[name]);
                 }
             } catch (err) {
-                _didIteratorError4 = true;
-                _iteratorError4 = err;
+                _didIteratorError5 = true;
+                _iteratorError5 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                        _iterator4.return();
+                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                        _iterator5.return();
                     }
                 } finally {
-                    if (_didIteratorError4) {
-                        throw _iteratorError4;
+                    if (_didIteratorError5) {
+                        throw _iteratorError5;
                     }
                 }
             }
@@ -313,27 +355,27 @@ var Ebase = function (_Component) {
             if (this.props.reverse) {
                 var x = [],
                     name = this.props.col[0];
-                var _iteratorNormalCompletion5 = true;
-                var _didIteratorError5 = false;
-                var _iteratorError5 = undefined;
+                var _iteratorNormalCompletion6 = true;
+                var _didIteratorError6 = false;
+                var _iteratorError6 = undefined;
 
                 try {
-                    for (var _iterator5 = this.props.data[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                        var item = _step5.value;
+                    for (var _iterator6 = this.props.data[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                        var item = _step6.value;
 
                         x.push(item[name]);
                     }
                 } catch (err) {
-                    _didIteratorError5 = true;
-                    _iteratorError5 = err;
+                    _didIteratorError6 = true;
+                    _iteratorError6 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion5 && _iterator5.return) {
-                            _iterator5.return();
+                        if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                            _iterator6.return();
                         }
                     } finally {
-                        if (_didIteratorError5) {
-                            throw _iteratorError5;
+                        if (_didIteratorError6) {
+                            throw _iteratorError6;
                         }
                     }
                 }
@@ -393,7 +435,7 @@ var Ebase = function (_Component) {
                         end: 36
                     }];
                 default:
-                    return null;
+                    return this.props.dataZoom;
             }
         }
     }, {
@@ -417,13 +459,13 @@ var Ebase = function (_Component) {
         key: 'toolbox',
         get: function get() {
             var toolbox = {};
-            var _iteratorNormalCompletion6 = true;
-            var _didIteratorError6 = false;
-            var _iteratorError6 = undefined;
+            var _iteratorNormalCompletion7 = true;
+            var _didIteratorError7 = false;
+            var _iteratorError7 = undefined;
 
             try {
-                for (var _iterator6 = this.props.toolbox[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-                    var item = _step6.value;
+                for (var _iterator7 = this.props.toolbox[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                    var item = _step7.value;
 
                     if (typeof item === 'string') {
                         toolbox[item] = {};
@@ -432,16 +474,16 @@ var Ebase = function (_Component) {
                     }
                 }
             } catch (err) {
-                _didIteratorError6 = true;
-                _iteratorError6 = err;
+                _didIteratorError7 = true;
+                _iteratorError7 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
-                        _iterator6.return();
+                    if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                        _iterator7.return();
                     }
                 } finally {
-                    if (_didIteratorError6) {
-                        throw _iteratorError6;
+                    if (_didIteratorError7) {
+                        throw _iteratorError7;
                     }
                 }
             }
