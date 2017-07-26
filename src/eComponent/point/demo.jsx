@@ -3,7 +3,7 @@ import Point from './index'
 class PointDemo extends Component {
     state = {
         data: [],
-        col: ["date", { name: "page" }, "food", "tool"]
+        col: ["date", { name: "page" }, "食物:food", "tool"]
     }
     componentDidMount() {
         this.setState({
@@ -35,7 +35,6 @@ class PointDemo extends Component {
         return (
             <div>
                 <div style={{ width: '1500px', height: '500px', display: 'inline-block' }}>
-
                     <Point
                         col={this.state.col}
                         data={this.state.data}

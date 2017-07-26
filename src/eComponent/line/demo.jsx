@@ -4,7 +4,7 @@ import Line from './index'
 class LineDemo extends Component {
     state = {
         data: [],
-        col: ["date", { name: "page" }, "food", "tool"]
+        col: ["date", { name: "一些奇怪的:some" }, "食物:food", "工具:tool"]
     }
     componentDidMount() {
         this.setState({
@@ -19,7 +19,7 @@ class LineDemo extends Component {
             let now = new Date(stateDate += day);
             data.push({
                 date: [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-                page: Math.floor(Math.random() * 300),
+                some: Math.floor(Math.random() * 300),
                 food: Math.floor(Math.random() * 300),
                 tool: Math.floor(Math.random() * 300),
             })
@@ -36,6 +36,7 @@ class LineDemo extends Component {
                         data={this.state.data}
                         col={this.state.col}
                         dataZoom='both'
+                        log={true}
                     >
                     </Line>
                 </div>

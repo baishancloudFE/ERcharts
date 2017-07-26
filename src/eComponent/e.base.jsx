@@ -125,23 +125,32 @@ class Ebase extends Component {
         return this.props.color
     }
     get series() {
-        let series = []
-        let data = this.props.data,
-            col = this.props.col
+        const { data, col } = this.props
+        const series = []
         for (let i = 1, n = col.length; i < n; ++i) {
             let datas = [],
                 obj = {},
-                key = typeof col[i] === "string" ? col[i] : col[i].name
+                key = typeof col[i] === "string" ? col[i] : col[i].name,
+                name = ''
+            if (key.split(':').length > 1) {
+                name = key.split(':')[0]
+                key = key.split(':')[1]
+
+            } else {
+                name = key
+            }
             for (let item of data) {
                 datas.push(item[key])
             }
+
             if (typeof col[i] === "string") {
                 series.push({
-                    name: col[i],
+                    name: name,
                     data: datas
                 })
             } else {
                 obj = col[i]
+                obj.name = name
                 obj.data = datas
                 series.push(obj)
             }
@@ -150,8 +159,18 @@ class Ebase extends Component {
     }
     get legend() {
         let limit = this.props.legendLimit ? this.props.legendLimit + 1 : this.props.col.length
+        const data = []
+        for (let item of this.props.col.slice(1, limit)) {
+            if (typeof item === "string") {
+                data.push(item.split(':')[0])
+            } else {
+                let obj = Object.assign({}, item)
+                obj.name = obj.name.split(':')[0]
+                data.push(item)
+            }
+        }
         return {
-            data: this.props.col.slice(1, limit),
+            data: data,
             selectedMode: this.props.legendSelectedMode ? this.props.legendSelectedMode : true
         }
     }

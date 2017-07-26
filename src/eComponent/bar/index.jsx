@@ -13,10 +13,10 @@ class Bar extends Ebase {
             }
             return item;
         })
-        this.isCompare(option.series)
+        this.isCompare(option.series, option.legend)
         this.changeOption(option)
     }
-    isCompare = (series) => {
+    isCompare = (series, legend) => {
         if (this.props.compare) {
             const compare = {
                 name: this.props.compare.name,
@@ -24,6 +24,7 @@ class Bar extends Ebase {
                 data: []
             },
                 names = this.props.compare.col
+            legend.data.push(this.props.compare.name)
             this.props.data.forEach(item => {
                 compare.data.push(-Math.abs(item[names[0]] - item[names[1]]))
             })
