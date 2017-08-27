@@ -4,7 +4,7 @@ import Pie from './index'
 class PieDemo extends Component {
     state = {
         data: [],
-        col: ["date", { name: "page" }, "food", "tool"],
+        col: ["date",'page'],
         loading: false
     }
     componentDidMount() {
@@ -43,21 +43,19 @@ class PieDemo extends Component {
                 <div style={{ width: '500px', height: '500px', display: 'inline-block' }}>
 
                     <Pie
-                        data={this.state.data}
+                        data={[{
+                            date:'中文1',
+                            page:500
+                        },
+                        {
+                            date:'中文2',
+                            page:600
+                        }
+                        ]}
                         col={this.state.col}
                         tooltip
                         ring
                         rose
-                        inside={[
-                            {
-                                name: '测试',
-                                value: 335,
-                            },
-                            {
-                                name: 'OK',
-                                value: 444
-                            }
-                        ]}
                         loading={this.state.loading}
                     >
                     </Pie>

@@ -12,10 +12,6 @@ var _e = require('./../e.base');
 
 var _e2 = _interopRequireDefault(_e);
 
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 require('echarts/lib/chart/line');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -62,6 +58,3 @@ var Line = function (_Ebase) {
 }(_e2.default);
 
 exports.default = Line;
-
-Line.propTypes.stack = _propTypes2.default.bool;
-Line.propTypes.area = _propTypes2.default.bool;

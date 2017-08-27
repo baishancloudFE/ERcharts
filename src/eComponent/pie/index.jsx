@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Ebase from './../e.base'
-import PropTypes from 'prop-types';
 import 'echarts/lib/chart/pie'
 class Pie extends Ebase {
     get xAxis() {
@@ -35,7 +34,7 @@ class Pie extends Ebase {
     get tooltip() {
         return {
             trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
+            formatter: "数值 <br/>{b} : {c} ({d}%)"
         }
     }
     get series() {
@@ -95,5 +94,4 @@ class Pie extends Ebase {
 }
 
 export default Pie;
-Pie.propTypes.ring = PropTypes.bool
-Pie.propTypes.rose = PropTypes.bool
+

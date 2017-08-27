@@ -14,10 +14,6 @@ var _e = require('./../e.base');
 
 var _e2 = _interopRequireDefault(_e);
 
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 require('echarts/lib/chart/pie');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -162,7 +158,7 @@ var Pie = function (_Ebase) {
         get: function get() {
             return {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "数值 <br/>{b} : {c} ({d}%)"
             };
         }
     }, {
@@ -215,6 +211,3 @@ var Pie = function (_Ebase) {
 }(_e2.default);
 
 exports.default = Pie;
-
-Pie.propTypes.ring = _propTypes2.default.bool;
-Pie.propTypes.rose = _propTypes2.default.bool;

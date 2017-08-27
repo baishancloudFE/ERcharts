@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import echarts from 'echarts/lib/echarts'
-const compare = function (arr1, arr2) {
-    if (!arr1 || !arr2) return false
-    let flag = []
-    arr1.forEach((item, index) => {
-        if (arr2[index].event !== item.event) {
-            flag.push(arr2[index])
-        }
-    })
-    return flag
-}
+import { compare, genterId } from './../tool/'
 class Ebase extends Component {
     //图表对象
     rule = {
@@ -42,14 +32,15 @@ class Ebase extends Component {
         textStyle: false,
     }
     Echart = null
-    id = new Date().getTime() + (Math.floor(Math.random() * 5000))
+    id = genterId()
     static defaultProps = {
         legend: true,
         data: [],
         col: [],
         color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
         notMerge: false,
-        log: false
+        log: false,
+        autoResize: false
     }
     render() {
         let style = {
@@ -67,9 +58,11 @@ class Ebase extends Component {
 
     componentDidMount() {
         this.Echart = echarts.init(document.getElementById(this.id))
+        if (this.props.getEchart) {
+            this.props.getEchart(this.Echart)
+        }
         this.config()
         this.events(this.props.events)
-
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -79,18 +72,14 @@ class Ebase extends Component {
         } else {
             this.Echart.hideLoading()
         }
-        // if (this.props.type) {
-        //     this.config()
-        // } else {
-        //     this.changeOption(this.getOption)
-        // }
         this.config()
-        // this.off(this.props.off)
         return false
     }
+
     componentWillUnmount() {
         this.Echart.dispose()
     }
+
     events = (events) => {
         if (events && events.length) {
             for (let item of events) {
@@ -106,9 +95,9 @@ class Ebase extends Component {
             }
         }
     }
+
     //变更配置
     changeOption = (option) => {
-
         if (this.props.log) {
             console.log(option)
         }
@@ -125,7 +114,7 @@ class Ebase extends Component {
         return this.props.color
     }
     get series() {
-        const { data, col } = this.props
+        const { data, col, markPoint } = this.props
         const series = []
         for (let i = 1, n = col.length; i < n; ++i) {
             let datas = [],
@@ -142,16 +131,17 @@ class Ebase extends Component {
             for (let item of data) {
                 datas.push(item[key])
             }
-
             if (typeof col[i] === "string") {
                 series.push({
                     name: name,
-                    data: datas
+                    data: datas,
+                    markPoint: markPoint ? markPoint[i - 1] : null
                 })
             } else {
                 obj = col[i]
                 obj.name = name
                 obj.data = datas
+                obj.markPoint = markPoint ? markPoint[i - 1] : null
                 series.push(obj)
             }
         }
@@ -182,14 +172,13 @@ class Ebase extends Component {
     }
     get xAxis() {
         if (this.props.reverse) {
-            let yAxis = [{ type: 'value', }]
+            const yAxis = [{ type: 'value', }]
             if (this.props.percent) {
                 yAxis.push({ type: 'value', position: 'right', name: '百分比', min: 0, max: 100, axisLabel: { formatter: '{value}%' } })
             }
             return yAxis
-
         }
-        let x = [],
+        const x = [],
             name = this.props.col[0]
         for (let item of this.props.data) {
             x.push(item[name])
@@ -201,7 +190,7 @@ class Ebase extends Component {
     }
     get yAxis() {
         if (this.props.reverse) {
-            let x = [],
+            const x = [],
                 name = this.props.col[0]
             for (let item of this.props.data) {
                 x.push(item[name])
@@ -210,14 +199,13 @@ class Ebase extends Component {
                 data: x
             }
         }
-        let yAxis = [{ type: 'value', }]
+        const yAxis = [{ type: 'value', }]
         if (this.props.percent) {
             yAxis.push({ type: 'value', position: 'right', name: '百分比', min: 0, max: 100, axisLabel: { formatter: '{value}%' } })
         }
         return yAxis
     }
     get dataZoom() {
-
         switch (this.props.dataZoom) {
             case "inside":
                 return [
@@ -333,19 +321,3 @@ class Ebase extends Component {
 }
 
 export default Ebase;
-
-Ebase.propTypes = {
-    title: PropTypes.any,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    col: PropTypes.array.isRequired,
-    data: PropTypes.array.isRequired,
-    legend: PropTypes.bool,
-    setting: PropTypes.object,
-    toolTip: PropTypes.string,
-    dataZoom: PropTypes.string,
-    legendLimit: PropTypes.number,
-    loading: PropTypes.bool,
-    reverse: PropTypes.bool,
-    brush: PropTypes.array
-}

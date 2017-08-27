@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Ebase from './../e.base'
-import PropTypes from 'prop-types';
 import 'echarts/lib/chart/bar'
 
 class Bar extends Ebase {

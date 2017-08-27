@@ -29,7 +29,9 @@ class BarDemo extends Component {
         return data
     }
     addData = () => {
-        this.state.data[0].data.push(55)
+        // this.state.data[0].data.push(55)
+        this.echart.resize()
+        console.log(this.echart)
         this.setState({
             data: this.state.data
         })
@@ -47,7 +49,7 @@ class BarDemo extends Component {
         ]
         return (
             <div>
-
+                <p onClick={this.addData}>ddddddddddd</p>
                 <Bar
                     data={this.state.data}
                     col={this.state.col}
@@ -58,6 +60,9 @@ class BarDemo extends Component {
                     compare={{
                         name: '差别',
                         col: ['page', 'food']
+                    }}
+                    getEchart={(inf) => {
+                        this.echart = inf
                     }}
                     toolbox={['dataView']}
                 >

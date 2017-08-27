@@ -34,7 +34,7 @@ class PointDemo extends Component {
     render() {
         return (
             <div>
-                <div style={{ width: '1500px', height: '500px', display: 'inline-block' }}>
+                <div style={{ width: '100%', height: '500px', display: 'inline-block' }}>
                     <Point
                         col={this.state.col}
                         data={this.state.data}

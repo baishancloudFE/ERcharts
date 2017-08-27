@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Ebase from './../e.base'
-import PropTypes from 'prop-types';
 class Charts extends Ebase {
     config = () => {
         let option = this.getOption

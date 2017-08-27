@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Ebase from './../e.base'
-import PropTypes from 'prop-types';
 import 'echarts/lib/chart/line'
 class Line extends Ebase {
     config = () => {
@@ -22,5 +21,3 @@ class Line extends Ebase {
 }
 
 export default Line;
-Line.propTypes.stack = PropTypes.bool
-Line.propTypes.area = PropTypes.bool

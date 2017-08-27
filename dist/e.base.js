@@ -12,13 +12,11 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 var _echarts = require('echarts/lib/echarts');
 
 var _echarts2 = _interopRequireDefault(_echarts);
+
+var _tool = require('./../tool/');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27,17 +25,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var compare = function compare(arr1, arr2) {
-    if (!arr1 || !arr2) return false;
-    var flag = [];
-    arr1.forEach(function (item, index) {
-        if (arr2[index].event !== item.event) {
-            flag.push(arr2[index]);
-        }
-    });
-    return flag;
-};
 
 var Ebase = function (_Component) {
     _inherits(Ebase, _Component);
@@ -80,7 +67,7 @@ var Ebase = function (_Component) {
             calendar: false,
             color: true,
             textStyle: false
-        }, _this.Echart = null, _this.id = new Date().getTime() + Math.floor(Math.random() * 5000), _this.events = function (events) {
+        }, _this.Echart = null, _this.id = (0, _tool.genterId)(), _this.events = function (events) {
             if (events && events.length) {
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -135,7 +122,6 @@ var Ebase = function (_Component) {
                 }
             }
         }, _this.changeOption = function (option) {
-
             if (_this.props.log) {
                 console.log(option);
             }
@@ -168,6 +154,9 @@ var Ebase = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.Echart = _echarts2.default.init(document.getElementById(this.id));
+            if (this.props.getEchart) {
+                this.props.getEchart(this.Echart);
+            }
             this.config();
             this.events(this.props.events);
         }
@@ -180,13 +169,7 @@ var Ebase = function (_Component) {
             } else {
                 this.Echart.hideLoading();
             }
-            // if (this.props.type) {
-            //     this.config()
-            // } else {
-            //     this.changeOption(this.getOption)
-            // }
             this.config();
-            // this.off(this.props.off)
             return false;
         }
     }, {
@@ -194,6 +177,7 @@ var Ebase = function (_Component) {
         value: function componentWillUnmount() {
             this.Echart.dispose();
         }
+
         //变更配置
 
     }, {
@@ -206,7 +190,8 @@ var Ebase = function (_Component) {
         get: function get() {
             var _props = this.props,
                 data = _props.data,
-                col = _props.col;
+                col = _props.col,
+                markPoint = _props.markPoint;
 
             var series = [];
             for (var i = 1, n = col.length; i < n; ++i) {
@@ -248,12 +233,14 @@ var Ebase = function (_Component) {
                 if (typeof col[i] === "string") {
                     series.push({
                         name: name,
-                        data: datas
+                        data: datas,
+                        markPoint: markPoint ? markPoint[i - 1] : null
                     });
                 } else {
                     obj = col[i];
                     obj.name = name;
                     obj.data = datas;
+                    obj.markPoint = markPoint ? markPoint[i - 1] : null;
                     series.push(obj);
                 }
             }
@@ -393,7 +380,6 @@ var Ebase = function (_Component) {
     }, {
         key: 'dataZoom',
         get: function get() {
-
             switch (this.props.dataZoom) {
                 case "inside":
                     return [{
@@ -536,23 +522,7 @@ Ebase.defaultProps = {
     col: [],
     color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
     notMerge: false,
-    log: false
+    log: false,
+    autoResize: false
 };
 exports.default = Ebase;
-
-
-Ebase.propTypes = {
-    title: _propTypes2.default.any,
-    width: _propTypes2.default.number,
-    height: _propTypes2.default.number,
-    col: _propTypes2.default.array.isRequired,
-    data: _propTypes2.default.array.isRequired,
-    legend: _propTypes2.default.bool,
-    setting: _propTypes2.default.object,
-    toolTip: _propTypes2.default.string,
-    dataZoom: _propTypes2.default.string,
-    legendLimit: _propTypes2.default.number,
-    loading: _propTypes2.default.bool,
-    reverse: _propTypes2.default.bool,
-    brush: _propTypes2.default.array
-};
