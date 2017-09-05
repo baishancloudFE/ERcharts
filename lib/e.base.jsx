@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import echarts from 'echarts/lib/echarts'
-import { compare, genterId } from './../tool/'
+import { compare, genterId } from './tool'
 class Ebase extends Component {
     //图表对象
     rule = {

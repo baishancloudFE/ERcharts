@@ -1,12 +1,13 @@
 {
   "name": "ercharts",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "homepage": ".",
   "dependencies": {
-    "echarts": "^3.6.1",
+    "echarts": "^3.7.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "zrender": "^3.6.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
@@ -25,5 +26,4 @@
     "dist"
   ],
   "main": "dist/index.js"
-
 }

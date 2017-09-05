@@ -16,7 +16,7 @@ var _echarts = require('echarts/lib/echarts');
 
 var _echarts2 = _interopRequireDefault(_echarts);
 
-var _tool = require('./../tool/');
+var _tool = require('./tool');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
